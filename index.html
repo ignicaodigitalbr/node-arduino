@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Leds</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="assets/components/bootstrap/dist/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Leds</h1>
+      <button id="led9" class="btn btn-lg btn-block btn-danger toggleLed" disabled>Vermelho</button>
+      <button id="led11" class="btn btn-lg btn-block btn-warning toggleLed" disabled>Amarelo</button>
+      <button id="led13" class="btn btn-lg btn-block btn-success toggleLed" disabled>Verde</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="assets/components/jquery/dist/jquery.min.js"></script>
+    <script>
+    (function($) {
+      var socket = io();
+      var $btns = $('.toggleLed');
+
+      socket.on('statusBoard', function (data) {
+        if (data) {
+          $btns
+            .prop('disabled', false)
+            .on('click', function(event) {
+              event.preventDefault();
+              socket.emit('led', this.id);
+            });
+        }
+      });
+    })(jQuery);
+    </script>
+  </body>
+</html>
