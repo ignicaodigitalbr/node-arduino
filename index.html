@@ -4,31 +4,53 @@
     <title>Leds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="assets/components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/checkbox.css">
   </head>
   <body>
     <div class="container">
-      <h1>Leds</h1>
-      <button id="led9" class="btn btn-lg btn-block btn-danger toggleLed" disabled>Vermelho</button>
-      <button id="led11" class="btn btn-lg btn-block btn-warning toggleLed" disabled>Amarelo</button>
-      <button id="led13" class="btn btn-lg btn-block btn-success toggleLed" disabled>Verde</button>
-    </div>
+      <h1 class="text-center">Leds</h1>
+
+      <div class="wrap-checkbox danger">
+        <input type="checkbox" name="red" id="led9" class="js-check" disabled>
+        <label for="led9"></label>
+      </div>
+
+      <div class="wrap-checkbox warning">
+        <input type="checkbox" name="yellow" id="led11" class="js-check" disabled>
+        <label for="led11"></label>
+      </div>
+
+      <div class="wrap-checkbox success">
+        <input type="checkbox" name="green" id="led13" class="js-check" disabled>
+        <label for="led13"></label>
+      </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="assets/components/jquery/dist/jquery.min.js"></script>
+    <script src="assets/components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script>
     (function($) {
       var socket = io();
       var $btns = $('.toggleLed');
+      var $check = $('.js-check');
 
       socket.on('statusBoard', function (data) {
         if (data) {
-          $btns
+          $check
             .prop('disabled', false)
             .on('click', function(event) {
-              event.preventDefault();
-              socket.emit('led', this.id);
+
+              socket.emit('led', {
+                led: this.id,
+                state: this.checked
+              });
+
             });
         }
+      });
+
+      socket.on('changeLed', function (data) {
+        $('#' + data.led).prop('checked', data.state);
       });
     })(jQuery);
     </script>
