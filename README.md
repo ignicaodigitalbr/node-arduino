@@ -22,6 +22,10 @@ or [download the zip](https://github.com/vitornogueira/node-arduino/archive/mast
 npm install && bower install
 ```
 
+##Breadboard/Illustration
+
+[example](example.png)
+
 ##Run server
 
 Conect your Arduino on computer and in the project folder run the command:
