@@ -24,7 +24,7 @@ npm install && bower install
 
 ##Breadboard/Illustration
 
-[example](example.png)
+<img src="https://raw.githubusercontent.com/vitornogueira/node-arduino/master/example.png">
 
 ##Run server
 
