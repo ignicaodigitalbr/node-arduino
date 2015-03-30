@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var app = express();
 var path = require('path');
@@ -12,7 +14,6 @@ var board = new five.Board();
 
 var boardIsReady = false;
 var leds = {};
-var currentStates = [];
 
 app.use(express.static(path.join(__dirname, 'public')));
 
