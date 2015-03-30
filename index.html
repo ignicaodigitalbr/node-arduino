@@ -28,31 +28,6 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="assets/components/jquery/dist/jquery.min.js"></script>
     <script src="assets/components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script>
-    (function($) {
-      var socket = io();
-      var $btns = $('.toggleLed');
-      var $check = $('.js-check');
-
-      socket.on('statusBoard', function (data) {
-        if (data) {
-          $check
-            .prop('disabled', false)
-            .on('click', function(event) {
-
-              socket.emit('led', {
-                led: this.id,
-                state: this.checked
-              });
-
-            });
-        }
-      });
-
-      socket.on('changeLed', function (data) {
-        $('#' + data.led).prop('checked', data.state);
-      });
-    })(jQuery);
-    </script>
+    <script src="assets/js/app.js"></script>
   </body>
 </html>
