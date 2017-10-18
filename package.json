@@ -1,22 +1,28 @@
 {
   "name": "node-arduino",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Open Source and Open Hardware, it's amazing!",
-  "main": "app.js",
-  "repository": {
-    "type": "git",
-    "url": "git@bitbucket.org:vitornogueira/node-arduino.git"
+  "author": "Vitor Nogueira <vnweb.contato@gmail.com>",
+  "scripts": {
+    "start": "node app"
   },
   "dependencies": {
-    "johnny-five": "~0.7.47",
-    "socket.io": "^1.0.6",
-    "express": "^4.4.5"
+    "express": "^4.16.2",
+    "johnny-five": "^0.11.6",
+    "socket.io": "^2.0.3"
   },
-  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ignicaodigitalbr/node-arduino.git"
+  },
   "keywords": [
     "node",
     "arduino"
   ],
-  "author": "Vítor Nogueira",
-  "license": "MIT"
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/ignicaodigitalbr/node-arduino#readme"
 }

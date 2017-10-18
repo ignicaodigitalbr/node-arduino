@@ -1,12 +1,15 @@
-#Node and Arduino
+# Node and Arduino
 
-##Requirements
+[![Dependency Status](https://img.shields.io/david/ignicaodigitalbr/node-arduino.svg?style=flat-square)](https://david-dm.org/ignicaodigitalbr/node-arduino)
+[![License](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://vitornogueira.mit-license.org/)
+
+## Requirements
 
 - [Arduino](http://arduino.cc)
 - [Node.js](https://nodejs.org)
 - [Bower](http:̉//bower.io)
 
-##Dependencies
+## Dependencies
 
 - [johnny-five](https://github.com/rwaldron/johnny-five)
 - [express](http://expressjs.com/)
@@ -14,32 +17,32 @@
 - [jQuery](http://jquery.com/)
 - [Bootstrap](http://getbootstrap.com/)
 
-##Download the project
+## Download the project
 
 Clone the project:
 
 ```
-git clone https://github.com/vitornogueira/node-arduino.git
+git clone https://github.com/ignicaodigitalbr/node-arduino.git
 ```
 
-or [download the zip](https://github.com/vitornogueira/node-arduino/archive/master.zip).
+or [download the zip](https://github.com/ignicaodigitalbr/node-arduino/archive/master.zip).
 
-##Clone dependencies
+## Clone dependencies
 
 ```
 npm install && bower install
 ```
 
-##Run server
+## Run server
 
 Conect your Arduino on computer and in the project folder run the command:
 ```
-node app.js
+npm start
 ```
 
 Access ```http://localhost:3000``` in your browser.
 
-##Breadboard/Illustration
+## Breadboard/Illustration
 
 <img src="https://raw.githubusercontent.com/vitornogueira/node-arduino/master/example.png">
 
