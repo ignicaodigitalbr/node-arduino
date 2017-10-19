@@ -1,3 +1,7 @@
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
 .wrap-checkbox {
   position: relative;
   overflow: hidden;
@@ -29,8 +33,6 @@
   text-transform: uppercase;
   color: #fff;
 
-  -webkit-transition: .3s;
-  -o-transition: .3s;
   transition: .3s;
 }
 
@@ -56,23 +58,14 @@
 
 .wrap-checkbox input[type=checkbox] + label:before,
 .wrap-checkbox input[type=checkbox]:checked + label:after {
-  -webkit-transform: translateX(0%);
-  -ms-transform: translateX(0%);
-  -o-transform: translateX(0%);
   transform: translateX(0%);
 }
 
 .wrap-checkbox input[type=checkbox]:checked + label:before {
-  -webkit-transform: translateX(-100%);
-  -ms-transform: translateX(-100%);
-  -o-transform: translateX(-100%);
   transform: translateX(-100%);
 }
 
 .wrap-checkbox input[type=checkbox] + label:after {
-  -webkit-transform: translateX(100%);
-  -ms-transform: translateX(100%);
-  -o-transform: translateX(100%);
   transform: translateX(100%);
 }
 
