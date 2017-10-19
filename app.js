@@ -1,75 +1,62 @@
-'use strict';
-
-var express = require('express');
-var app = express();
-var path = require('path');
-var server = app.listen(3000, function () {
+const express = require('express');
+const app = express();
+const path = require('path');
+const server = app.listen(3000, () => {
   console.log('Listening on port %d', server.address().port);
 });
 
-var io = require('socket.io')(server);
+const io = require('socket.io')(server);
 
-var five = require('johnny-five');
-var board = new five.Board();
+const five = require('johnny-five');
+const board = new five.Board();
 
-var boardIsReady = false;
-var leds = {};
+const ledPins = [9, 11, 13];
+const leds = {};
+
+let boardIsReady = false;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', function (req, res) {
-  res.sendfile('index.html');
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-board.on('ready', function () {
+const createLead = (ledPin) => (leds[`led${ledPin}`] = new five.Pin(ledPin));
+const queryLead = (ledPin) => leds[`led${ledPin}`].query((state) => {
+  io.emit('changeLed', {
+    led: `led${ledPin}`,
+    state: state.value
+  });
+});
+
+board.on('ready', () => {
   boardIsReady = true;
 
   io.emit('statusBoard', boardIsReady);
 
-  leds.led7 = new five.Pin(7);
-  leds.led9 = new five.Pin(9);
-  leds.led11 = new five.Pin(11);
-  leds.led13 = new five.Pin(13);
+  ledPins.forEach(createLead);
 });
 
-io.on('connection', function (socket) {
+io.on('connection', (socket) => {
   io.emit('statusBoard', boardIsReady);
 
-  if (boardIsReady) {
-    leds.led7.high();
-
-    leds.led9.query(function (state) {
-      io.emit('changeLed', {
-        led: 'led9',
-        state: state.value
-      });
-    });
-
-    leds.led11.query(function (state) {
-      io.emit('changeLed', {
-        led: 'led11',
-        state: state.value
-      });
-    });
-
-    leds.led13.query(function (state) {
-      io.emit('changeLed', {
-        led: 'led13',
-        state: state.value
-      });
-    });
+  if (!boardIsReady) {
+    return false;
   }
 
-  socket.on('led', function (data) {
-    if (boardIsReady) {
-      if (data.state) {
-        leds[data.led].high();
-      }
-      else {
-        leds[data.led].low();
-      }
+  ledPins.forEach(queryLead);
 
-      io.emit('changeLed', data);
+  socket.on('led', (data) => {
+    if (!boardIsReady) {
+      return false;
     }
+
+    io.emit('changeLed', data);
+
+    if (data.state) {
+      return leds[data.led].high();
+    }
+
+    leds[data.led].low();
   });
 });

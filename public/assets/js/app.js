@@ -1,36 +1,31 @@
-(function($) {
-  'use strict';
+(function() {
+  const checkboxes = document.querySelectorAll('.js-check');
+  const socket = io();
 
-  var socket = io();
-  var $check = $('.js-check');
-
-  socket.on('statusBoard', function (data) {
-    // Se a `board` estiver pronta
-    if (data) {
-
-      // Desabilita os `checkbox` para que o usuário
-      // possa interagir com os leds
-      $check.prop('disabled', false);
-
-      // Quando o usuário clicar em um checkbox
-      // envia o ID do LED para ser alterado
-      // e o status [true | false]
-      $check.on('click', function() {
-
-        socket.emit('led', {
-          led: this.id,
-          state: this.checked
-        });
-
-      });
-
+  socket.on('statusBoard', (boardIsReady) => {
+    if (!boardIsReady) {
+      return false;
     }
+
+    Array.from(checkboxes).forEach((checkbox) => {
+      checkbox.removeAttribute('disabled');
+
+      checkbox.addEventListener('click', function() {
+        const state = this.checked;
+        const led = this.id;
+
+        socket.emit('led', { state, led });
+      });
+    });
   });
 
-  // Altera a propriedade `checked` a cada alteração
-  // de status dos LEDs por cada usuário
-  socket.on('changeLed', function (data) {
-    $('#' + data.led).prop('checked', data.state);
-  });
+  socket.on('changeLed', (data) => {
+    const checkbox = document.getElementById(data.led);
 
-})(jQuery);
+    if (data.state) {
+      return checkbox.setAttribute('checked', true);
+    }
+
+    checkbox.removeAttribute('checked');
+  });
+})();
